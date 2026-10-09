@@ -14,13 +14,13 @@ Rejestracja faktury w KSeF odbywa się poprzez przygotowanie pliku xml spełniaj
 Chce się nauczyć:
 1. Jak sięgać po dane wejściowe (paragony) zgromadzone w jakimś źródle, może to być:
 - baza danych, bo znam podstawy baz danych takich jak mySQL i języka zapytań SQL
-- jakiś web serwice, nie znam ale chętnie się nauczę jak tego używać i wydaje mi się to bardziej atrakcyjne 
+- jakiś web service, nie znam ale chętnie się nauczę jak tego używać i wydaje mi się to bardziej atrakcyjne 
 2. Jak przetwarzać dane:
-- weryfikować ich porpawność np. czy NIP jest poprawny
-- wyliczać stawki dopowiednie stawki VAT dla różnych typów produków
-3. Jak przygotować poprawne dane wyjśiowe:
+- weryfikować ich poprawność np. czy NIP jest poprawny
+- wyliczać stawki odpowiednie stawki VAT dla różnych typów produktów
+3. Jak przygotować poprawne dane wyjściowe:
 - tworzenie plików XML
-- obsługa formatowanie charakterysytczne dla XML
+- obsługa formatowanie charakterystyczne dla XML
 4. Jak wysłać taki plik gdzieś do systemu docelowego. Nie mam pojęcia jeszcze co i jak w tym obszarze. 
 
 -->
