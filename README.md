@@ -11,4 +11,16 @@ Oznacza to, że za każdym razem jak konsument poda numer NIP można założyć,
 Faktury powinny być rejestrowane w KSeF. 
 Rejestracja faktury w KSeF odbywa się poprzez przygotowanie pliku xml spełniającego wymagania tzw. faktury ustrukturyzowanej oraz przesłanie go do systemu KSeF.
 
+Chce się nauczyć:
+1. Jak sięgać po dane wejściowe (paragony) zgromadzone w jakimś źródle, może to być:
+- baza danych, bo znam podstawy baz danych takich jak mySQL i języka zapytań SQL
+- jakiś web serwice, nie znam ale chętnie się nauczę jak tego używać i wydaje mi się to bardziej atrakcyjne 
+2. Jak przetwarzać dane:
+- weryfikować ich porpawność np. czy NIP jest poprawny
+- wyliczać stawki dopowiednie stawki VAT dla różnych typów produków
+3. Jak przygotować poprawne dane wyjśiowe:
+- tworzenie plików XML
+- obsługa formatowanie charakterysytczne dla XML
+4. Jak wysłać taki plik gdzieś do systemu docelowego. Nie mam pojęcia jeszcze co i jak w tym obszarze. 
+
 -->
