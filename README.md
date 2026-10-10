@@ -13,7 +13,7 @@ Rejestracja faktury w KSeF odbywa się poprzez przygotowanie pliku xml spełniaj
 
 Chce się nauczyć:
 1. Jak sięgać po dane wejściowe (paragony) zgromadzone w jakimś źródle, może to być:
-- baza danych, bo znam podstawy baz danych takich jak mySQL i języka zapytań SQL
+- baza danych, bo znam podstawy baz danych takich jak MySQL i języka zapytań SQL
 - jakiś web service, nie znam ale chętnie się nauczę jak tego używać i wydaje mi się to bardziej atrakcyjne 
 2. Jak przetwarzać dane:
 - weryfikować ich poprawność np. czy NIP jest poprawny
