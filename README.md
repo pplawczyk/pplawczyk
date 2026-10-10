@@ -23,4 +23,11 @@ Chce się nauczyć:
 - obsługa formatowanie charakterystyczne dla XML
 4. Jak wysłać taki plik gdzieś do systemu docelowego. Nie mam pojęcia jeszcze co i jak w tym obszarze. 
 
+Co robię w tej chwili:
+Z1 - Generuje sample data, które będą reprezentować paragony:
+     - używam formuł Excela
+     - dane wyexportuje do plików CSV - jeszcze nie wiem czy to docelowa forma ale póki co to dla mnie wygodny format
+     - 1000 sameple records, z okresu: <01.08.2026 , 10.10.2026>
+     - dane z 3 lokali: lokal A: 1 kasa, lokal B: 2 kasy, lokal C: 2 kasy 
+
 -->
