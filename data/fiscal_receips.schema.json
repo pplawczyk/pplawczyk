@@ -1,0 +1,642 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/fiscal-receipts-dataset.schema.json",
+  "title": "Zbiór 1000 paragonów fiskalnych",
+  "description": "Schemat jednego pliku zawierającego 1000 paragonów zgodnych z kanonicznym modelem danych.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "datasetVersion",
+    "generatedForSchemaVersion",
+    "receiptCount",
+    "generationParameters",
+    "receipts"
+  ],
+  "$defs": {
+    "money": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$"
+    },
+    "nonNegativeMoney": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+    },
+    "quantity": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{3}$"
+    },
+    "ratePercent": {
+      "type": "string",
+      "enum": [
+        "5.00",
+        "8.00",
+        "23.00"
+      ]
+    },
+    "address": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "street",
+        "postalCode",
+        "city",
+        "countryCode"
+      ],
+      "properties": {
+        "street": {
+          "type": "string",
+          "minLength": 1
+        },
+        "postalCode": {
+          "type": "string",
+          "pattern": "^[0-9]{2}-[0-9]{3}$"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "countryCode": {
+          "const": "PL"
+        }
+      }
+    },
+    "vatData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ratePercent",
+        "fiscalRateCode",
+        "netAmount",
+        "vatAmount",
+        "grossAmount"
+      ],
+      "properties": {
+        "ratePercent": {
+          "$ref": "#/$defs/ratePercent"
+        },
+        "fiscalRateCode": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "netAmount": {
+          "$ref": "#/$defs/money"
+        },
+        "vatAmount": {
+          "$ref": "#/$defs/money"
+        },
+        "grossAmount": {
+          "$ref": "#/$defs/money"
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "documentType",
+        "document",
+        "references",
+        "seller",
+        "location",
+        "pointOfSale",
+        "fiscalDevice",
+        "customer",
+        "items",
+        "vatSummary",
+        "totals",
+        "payments",
+        "paymentSummary",
+        "fiscalInformation",
+        "externalReferences",
+        "integrity",
+        "additionalInformation"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "documentType": {
+          "const": "FISCAL_RECEIPT"
+        },
+        "document": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "receiptId",
+            "receiptNumber",
+            "displayNumber",
+            "transactionStatus",
+            "fiscalStatus",
+            "currency",
+            "saleDateTime",
+            "issuedDateTime"
+          ],
+          "properties": {
+            "receiptId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "receiptNumber": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "displayNumber": {
+              "type": "string",
+              "minLength": 1
+            },
+            "transactionStatus": {
+              "const": "COMPLETED"
+            },
+            "fiscalStatus": {
+              "const": "ISSUED"
+            },
+            "currency": {
+              "const": "PLN"
+            },
+            "saleDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "issuedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "references": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "transactionId",
+            "orderId",
+            "sourceSystem",
+            "sourceDocumentId"
+          ],
+          "properties": {
+            "transactionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "orderId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourceSystem": {
+              "const": "POS"
+            },
+            "sourceDocumentId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "seller": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "nip",
+            "address"
+          ],
+          "properties": {
+            "name": {
+              "const": "McDonald’s Polska Sp. z o.o."
+            },
+            "nip": {
+              "type": "string",
+              "pattern": "^[0-9]{10}$"
+            },
+            "address": {
+              "$ref": "#/$defs/address"
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "locationId",
+            "name",
+            "address"
+          ],
+          "properties": {
+            "locationId": {
+              "type": "string",
+              "enum": [
+                "REST-001",
+                "REST-002",
+                "REST-003"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "address": {
+              "$ref": "#/$defs/address"
+            }
+          }
+        },
+        "pointOfSale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "posId",
+            "workstationNumber",
+            "cashier"
+          ],
+          "properties": {
+            "posId": {
+              "type": "string",
+              "pattern": "^POS-0[1-5]$"
+            },
+            "workstationNumber": {
+              "type": "string",
+              "pattern": "^0[1-5]$"
+            },
+            "cashier": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "cashierId",
+                "displayName"
+              ],
+              "properties": {
+                "cashierId": {
+                  "type": "string",
+                  "pattern": "^EMP-[0-9]{4}$"
+                },
+                "displayName": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "fiscalDevice": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "deviceId",
+            "registerNumber",
+            "uniqueNumber",
+            "manufacturer",
+            "model"
+          ],
+          "properties": {
+            "deviceId": {
+              "type": "string",
+              "pattern": "^DEVICE-0[1-5]$"
+            },
+            "registerNumber": {
+              "type": "string",
+              "pattern": "^KASA-0[1-5]$"
+            },
+            "uniqueNumber": {
+              "type": "string",
+              "pattern": "^AAA[0-9]{9}$"
+            },
+            "manufacturer": {
+              "const": "Posnet Polska S.A."
+            },
+            "model": {
+              "const": "POSPAY ONLINE"
+            }
+          }
+        },
+        "customer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nip"
+          ],
+          "properties": {
+            "nip": {
+              "const": "5210088110"
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lineNumber",
+              "itemType",
+              "productId",
+              "ean",
+              "name",
+              "unitOfMeasure",
+              "quantity",
+              "unitGrossPrice",
+              "grossAmountBeforeDiscount",
+              "discounts",
+              "totalDiscountAmount",
+              "grossAmount",
+              "vat"
+            ],
+            "properties": {
+              "lineNumber": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "itemType": {
+                "const": "PRODUCT"
+              },
+              "productId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ean": {
+                "type": "null"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unitOfMeasure": {
+                "const": "szt."
+              },
+              "quantity": {
+                "$ref": "#/$defs/quantity"
+              },
+              "unitGrossPrice": {
+                "$ref": "#/$defs/money"
+              },
+              "grossAmountBeforeDiscount": {
+                "$ref": "#/$defs/money"
+              },
+              "discounts": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "totalDiscountAmount": {
+                "const": "0.00"
+              },
+              "grossAmount": {
+                "$ref": "#/$defs/money"
+              },
+              "vat": {
+                "$ref": "#/$defs/vatData"
+              }
+            }
+          }
+        },
+        "vatSummary": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/vatData"
+          }
+        },
+        "totals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "netAmount",
+            "vatAmount",
+            "grossAmountBeforeDiscount",
+            "discountAmount",
+            "grossAmount",
+            "amountDue"
+          ],
+          "properties": {
+            "netAmount": {
+              "$ref": "#/$defs/money"
+            },
+            "vatAmount": {
+              "$ref": "#/$defs/money"
+            },
+            "grossAmountBeforeDiscount": {
+              "$ref": "#/$defs/money"
+            },
+            "discountAmount": {
+              "const": "0.00"
+            },
+            "grossAmount": {
+              "$ref": "#/$defs/money"
+            },
+            "amountDue": {
+              "$ref": "#/$defs/money"
+            }
+          }
+        },
+        "payments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "paymentId",
+              "method",
+              "currency",
+              "tenderedAmount",
+              "appliedAmount",
+              "paymentDateTime",
+              "externalReference"
+            ],
+            "properties": {
+              "paymentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "method": {
+                "const": "CARD"
+              },
+              "currency": {
+                "const": "PLN"
+              },
+              "tenderedAmount": {
+                "$ref": "#/$defs/nonNegativeMoney"
+              },
+              "appliedAmount": {
+                "$ref": "#/$defs/nonNegativeMoney"
+              },
+              "paymentDateTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "externalReference": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "paymentSummary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "amountTendered",
+            "amountApplied",
+            "changeAmount",
+            "remainingAmount"
+          ],
+          "properties": {
+            "amountTendered": {
+              "$ref": "#/$defs/nonNegativeMoney"
+            },
+            "amountApplied": {
+              "$ref": "#/$defs/nonNegativeMoney"
+            },
+            "changeAmount": {
+              "const": "0.00"
+            },
+            "remainingAmount": {
+              "const": "0.00"
+            }
+          }
+        },
+        "fiscalInformation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "isFiscalDocument",
+            "documentLabel",
+            "fiscalLogoPresent",
+            "fiscalUniqueNumber"
+          ],
+          "properties": {
+            "isFiscalDocument": {
+              "const": true
+            },
+            "documentLabel": {
+              "const": "PARAGON FISKALNY"
+            },
+            "fiscalLogoPresent": {
+              "const": true
+            },
+            "fiscalUniqueNumber": {
+              "type": "string",
+              "pattern": "^AAA[0-9]{9}$"
+            }
+          }
+        },
+        "externalReferences": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "integrity": {
+          "type": "null"
+        },
+        "additionalInformation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "salesChannel",
+            "transactionType",
+            "serviceMode",
+            "trainingMode",
+            "isCopy",
+            "isReprint"
+          ],
+          "properties": {
+            "salesChannel": {
+              "const": "IN_STORE"
+            },
+            "transactionType": {
+              "const": "SALE"
+            },
+            "serviceMode": {
+              "const": "DINE_IN"
+            },
+            "trainingMode": {
+              "const": false
+            },
+            "isCopy": {
+              "const": false
+            },
+            "isReprint": {
+              "const": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "datasetVersion": {
+      "const": "1.0.0"
+    },
+    "generatedForSchemaVersion": {
+      "const": "1.0.0"
+    },
+    "receiptCount": {
+      "const": 1000
+    },
+    "generationParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "periodFrom",
+        "periodTo",
+        "currency",
+        "serviceMode",
+        "paymentMethod",
+        "customerNip",
+        "restaurantDistribution"
+      ],
+      "properties": {
+        "periodFrom": {
+          "const": "2026-08-01"
+        },
+        "periodTo": {
+          "const": "2026-10-10"
+        },
+        "currency": {
+          "const": "PLN"
+        },
+        "serviceMode": {
+          "const": "DINE_IN"
+        },
+        "paymentMethod": {
+          "const": "CARD"
+        },
+        "customerNip": {
+          "const": "5210088110"
+        },
+        "restaurantDistribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "REST-001",
+            "REST-002",
+            "REST-003"
+          ],
+          "properties": {
+            "REST-001": {
+              "const": 130
+            },
+            "REST-002": {
+              "const": 510
+            },
+            "REST-003": {
+              "const": 360
+            }
+          }
+        }
+      }
+    },
+    "receipts": {
+      "type": "array",
+      "minItems": 1000,
+      "maxItems": 1000,
+      "items": {
+        "$ref": "#/$defs/receipt"
+      }
+    }
+  }
+}
