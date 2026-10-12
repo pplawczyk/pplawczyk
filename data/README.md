@@ -4,8 +4,8 @@
 
 Zestaw składa się z trzech powiązanych plików:
 
-- `fiscal_receips.json` – dane 1000 paragonów,
-- `fiscal_receipsschema.json` – JSON Schema Draft 2020-12 dla całego zbioru i pojedynczego paragonu,
+- `receips.json` – dane 1000 paragonów,
+- `receipsschema.json` – JSON Schema Draft 2020-12 dla całego zbioru i pojedynczego paragonu,
 - `README.md` – opis struktury, założeń i reguł kontroli.
 
 ## Charakter danych
