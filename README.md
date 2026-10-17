@@ -26,7 +26,7 @@ Chce się nauczyć:
 Co robię w tej chwili:
 Z1 - Wygenerowałem sample data w postacji JSON z 1000 paragonami
 Z2 - Uruchomie web service, który sprawdza czy wywołano jakieś parametry na / oraz /receipts
-Open: nie wiem czy potrzebne jest obsłużenie wszystkich możliwych wywołań strony tak by nie zwracała 404 Not Found.
+Open: nie wiem czy potrzebne jest obsłużenie wszystkich możliwych wywołań strony tak by nie zwracała 404 Not Found. Na potrzeby nauki raczej nic więcej mi to nie wnosi.
 Z3 - Dodam obsługę plików. Tak by móc czytac plik z paragonami.
-Open: jaką metodę wybrać? Przeglądanie całego pliku przy każdym zapytaniu do webservice wydaje się być mało eleganckim rozwiązaniem.
+Open: jaką metodę wybrać? Przeglądanie całego pliku przy każdym zapytaniu do webservice wydaje się być mało eleganckim rozwiązaniem. Najlepiej wydaje się wczytywać jakoś paragon po paragonie, sprawdzać paragaon różnymi warunkami i przygotować wynik w postaci listy z ID. Nie wiem jak wygodnie zwrócić taki wynik.
 -->
