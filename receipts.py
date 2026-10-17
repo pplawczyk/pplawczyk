@@ -11,4 +11,4 @@ def check_receipe(id_receipe):
     """Zwraca True, jeśli identyfikator istnieje paragon o danym ID."""
     if id_receipe is None:
         return False
-    return bool(str(id_paragonu).strip())
+    return bool(str(id_receipe).strip())
