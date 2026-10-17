@@ -8,10 +8,24 @@ webservice.json.ensure_ascii = False
 # sort_keys to parametr podklasy json, który wymusza sortowanie parametrów podawanych prze JSON w odpowiedzi, daje to większą czytelność chociaż teoretycznie nie jest to do końca poprawne bo API odwołuje się po kluczach, a nie indeksach
 webservice.json.sort_keys = False
 
-# Przed uruchomieniem webservice sprawdzę czy w ogóle mam dostęp do danych o paragonach. Najprościej sprawdzić czy jest plik.
-# Nie będę weryfikował jego zawartości bo parser danych nie jest na tym etapie moim celem.
 
-# Obsłużę wywołanie strony głównej
+# Obsługa end point /recepipt
+@webservice.route("/receipt")
+def receipt():
+    # na początek sprawdzę czy podano jakiekowliek parametry w zapytaniu HTTP GET
+    if  len(request.args) == 0:
+        return jsonify({
+            "status": "Błąd.",
+            "kod błędu": 1,
+            "opis": "Nie podano parametrów."
+        }), 400
+    return jsonify({
+        "status": "Sukces.",
+        "parametry": dict(request.args)
+    })
+
+
+# Obsłużę end point /
 @webservice.route("/")
 def root_page():
     if  len(request.args) == 0:
@@ -26,6 +40,7 @@ def root_page():
         "opis": "Nie wywołano usługi."
     })
 
+# Obsługa end point /receipts
 @webservice.route("/receipts")
 def receipts():
     # na początek sprawdzę czy podano jakiekowliek parametry w zapytaniu HTTP GET
@@ -41,4 +56,4 @@ def receipts():
     })
 
 if __name__ == "__main__":
-    webservice.run(debug=True)
+     webservice.run(debug=True)

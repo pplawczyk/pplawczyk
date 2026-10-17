@@ -22,7 +22,7 @@ Chce się nauczyć:
 - tworzenie plików XML
 - obsługa formatowanie charakterystyczne dla XML
 4. Jak wysłać taki plik gdzieś do systemu docelowego. Nie mam pojęcia jeszcze co i jak w tym obszarze. 
-5. Anychroniczność zadań.
+5. Asynchroniczność zadań.
 6. Wypisać listę funkcji, które chce zaimplementować
 
 Co robię w tej chwili:
