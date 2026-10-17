@@ -25,6 +25,7 @@ Chce się nauczyć:
 
 Co robię w tej chwili:
 Z1 - Wygenerowałem sample data w postacji JSON z 1000 paragonami
-Z2 - Uruchomie web service, który będzie udostępniał paragony jako podpowiedź na pytanie
-
+Z2 - Uruchomie web service, który sprawdza czy wywołano jakieś parametry na / oraz /receipts
+Open: nie wiem czy potrzebne jest obsłużenie wszystkich możliwych wywołań strony tak by nie zwracała 404 Not Found.
+Z3 - Dodam obsługę plików. Tak by móc czytac plik z paragonami.
 -->
