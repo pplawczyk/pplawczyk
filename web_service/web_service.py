@@ -13,18 +13,32 @@ app.json.ensure_ascii = False
 # sort_keys to parametr podklasy json, który wymusza sortowanie parametrów podawanych prze JSON w odpowiedzi, daje to większą czytelność chociaż teoretycznie nie jest to do końca poprawne bo API odwołuje się po kluczach, a nie indeksach
 app.json.sort_keys = False
 
+# Najpierw obsłużę wywołanie strony głównej
+@app.route("/")
+def root_page():
+    if  len(request.args) == 0:
+            return jsonify({
+                "status": "Sukces.",
+                "kod błędu": 0,
+                "opis": "Witaj w serwisie pragonów fiskalnych."
+            }), 200
+    return jsonify({
+        "status": "Błąd.",
+        "kod błędu": "2",
+        "opis": "Nie wywołano usługi."
+    })
 
 @app.route("/receipts")
 def receipts():
     # na początek sprawdzę czy podano jakiekowliek parametry w zapytaniu HTTP GET
     if  len(request.args) == 0:
         return jsonify({
-            "status": "Błąd",
+            "status": "Błąd.",
             "kod błędu": 1,
-            "opis": "Nie podano parametrów"
+            "opis": "Nie podano parametrów."
         }), 400
     return jsonify({
-        "status": "Sukces",
+        "status": "Sukces.",
         "parametry": dict(request.args)
     })
 
