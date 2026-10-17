@@ -3,3 +3,8 @@
 
 # pathlib to standartowa bibliotego pythona używana do pracy ze ścieżkami,
 from pathlib import Path
+
+# Zmienna, w której będę przechowywał folder w którym uruchamiam program
+my_folder = ""
+my_folder = Path(__file__).resolve().parent
+print(my_folder)
