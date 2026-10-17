@@ -37,3 +37,13 @@ def root_page():
 if __name__ == "__main__":
     print("Info: Webservice is starting")
     webserver = make_server("127.0.0.1", 5000, webservice)
+
+    print("Checking: Passed: Webservice działa. Zatrzymaj go przez Ctrl + C.")
+
+    try:
+         webserver.serve_forever()
+    except KeyboardInterrupt:
+         pass
+    finally:
+         webserver.server_close()
+         print("Info: Webservice is closed.")
