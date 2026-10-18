@@ -16,6 +16,8 @@ webservice = Flask(__name__)
 webservice.json.ensure_ascii = False
 # sort_keys to parametr podklasy json, który wymusza sortowanie parametrów podawanych prze JSON w odpowiedzi, daje to większą czytelność chociaż teoretycznie nie jest to do końca poprawne bo API odwołuje się po kluczach, a nie indeksach
 webservice.json.sort_keys = False
+# compact to parametr dający większą czytelność JSON
+webservice.json.compact = False
 
 
 
