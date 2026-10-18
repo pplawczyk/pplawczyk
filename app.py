@@ -1,6 +1,6 @@
 import subprocess
-from check_data import check_data_folder, check_data_file
-from webservice import webservice_start
+from check_data import check_data_folder, check_data_file, check_receiptId
+from archive.webservice import webservice_start
 from flask import Flask, jsonify, request
 from werkzeug.serving import make_server
 
@@ -17,6 +17,7 @@ webservice.json.ensure_ascii = False
 webservice.json.sort_keys = False
 webservice.json.compact = False
 
+
 @webservice.route("/receipts")
 def receipts():
     if len(request.args) == 0:
@@ -25,12 +26,21 @@ def receipts():
         "kod błędu": "2",
         "opis": "Nie podano parametrów."
     })
-    else:
-             
+    elif len(request.args) == 1 and check_receiptId(request.args["receiptId"]):
+        # Tutaj muszę sprawdzić czy istnieje wywołany paraon
         return jsonify({
-            "status": "OK",
-            "parametry": request.args.to_dict()
+            "status": "OK.",
+            "kod błędu": "0",
+            "opis": "Podano prawidłowy parametr w wywołaniu usługi.",
         }), 200
+        
+    else:
+        return jsonify({
+                "status": "Błąd.",
+                "kod błędu": "3",
+                "opis": "Podany parametr nie spełnia wymogów UUID."
+        })
+         
      
 
 

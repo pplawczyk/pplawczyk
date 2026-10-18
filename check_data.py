@@ -3,7 +3,7 @@
 
 # pathlib to standartowa bibliotego pythona używana do pracy ze ścieżkami,
 from pathlib import Path
-
+import uuid
 
 def check_data_folder():
     # Zmienna, której przypisuje folder w którym znajduje się JSON z paragonami 
@@ -26,4 +26,14 @@ def check_data_file():
     else:
         print("Checking: Passed: JSON file is not empty")
         return(True)
-        
+
+# sprawdzam czy receiptId ma format zgodny z UUID, do tego potrzebna mi biblioteka uuid
+
+def check_receiptId(receiptId):
+    try:
+        uuid.UUID(receiptId)
+        print("Podana wartość jest zgodna z UUID.")
+        return(True)
+    except ValueError:
+        print("Podana wartość nie jest zgodna z UUID")
+        return(False)

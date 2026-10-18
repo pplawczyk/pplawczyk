@@ -5,12 +5,17 @@
 # 1. sprawdź czy paragon o danym ID istnieje in:(id_paragonu), out:(boolean)
 # 2. odpytaj o paragony z danego zakresu in:(datefrom, dateto), out:(list[id_paragonów...])
 #
+# Do obsługi plików JSON "element" po "elemencie" (item) potrzebuje biblioteki ijoin
+import ijson
 #
-#
-#
+# Sprawdź czy istnieje paragon o podanym ID
+def ask_if_receipt_exists(receipt_id):
+    # najpierw otworzę sobie plik z danymi do odczytu jako plik binerny bo tego wymagan ijson
+    # with zapewnia mi, że dopóki nie zamknę tego segmentu plik pozostnie otwarty, a po jego zamknięciu python samodzielnie ten plik zamknie
+    with open("data/receipts.json", "rb") as file:
 
-def check_receipe(id_receipe):
-    """Zwraca True, jeśli identyfikator istnieje paragon o danym ID."""
-    if id_receipe is None:
-        return False
-    return bool(str(id_receipe).strip())
+        for receipt in ijson.items(file, "receipts.item"):
+            if receipt["document"]["receiptId"] == receipt_id:
+                return True
+
+    return False
