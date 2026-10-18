@@ -12,16 +12,34 @@ check_data_file()
 
 # Tworzę obiekt app, który jest instancją klasy Flask.
 webservice = Flask(__name__)
-# ensure_ascii to paremetr podklasy json, który zmienia sposób obłsugi znaków narodowych
+# ustawiam parametry wyświetlania wyników JSON
 webservice.json.ensure_ascii = False
-# sort_keys to parametr podklasy json, który wymusza sortowanie parametrów podawanych prze JSON w odpowiedzi, daje to większą czytelność chociaż teoretycznie nie jest to do końca poprawne bo API odwołuje się po kluczach, a nie indeksach
 webservice.json.sort_keys = False
-# compact to parametr dający większą czytelność JSON
 webservice.json.compact = False
 
+@webservice.route("/receipts")
+def receipts():
+    if len(request.args) == 0:
+        return jsonify({
+        "status": "Błąd.",
+        "kod błędu": "2",
+        "opis": "Nie podano parametrów."
+    })
+    else:
+             
+        return jsonify({
+            "status": "OK",
+            "parametry": request.args.to_dict()
+        }), 200
+     
 
 
-# Obsłużę end point / i o nim zapomnę bo to jeszcze nic nie wnosi
+
+
+
+
+
+# Obsłużę end point / i o nim zapomnę bo to jeszcze nic nie wnosi, takie "Hello Word!"
 @webservice.route("/")
 def root_page():
     if  len(request.args) == 0:
@@ -32,20 +50,9 @@ def root_page():
             }), 200
     return jsonify({
         "status": "Błąd.",
-        "kod błędu": "2",
+        "kod błędu": "1",
         "opis": "Nie wywołano usługi."
-    })
-
+    }), 200
 if __name__ == "__main__":
     print("Info: Webservice is starting")
-    webserver = make_server("127.0.0.1", 5000, webservice)
-
-    print("Checking: Passed: Webservice działa. Zatrzymaj go przez Ctrl + C.")
-
-    try:
-         webserver.serve_forever()
-    except KeyboardInterrupt:
-         pass
-    finally:
-         webserver.server_close()
-         print("Info: Webservice is closed.")
+    webservice.run(debug=True)
