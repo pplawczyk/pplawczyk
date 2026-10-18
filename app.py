@@ -1,5 +1,5 @@
 import subprocess
-from check_data import check_data_folder, check_data_file#, check_argument, check_receiptId
+from check_data import check_data_folder, check_data_file, check_receiptId, get_receipt
 from flask import Flask, jsonify, request
 
 subprocess.run("cls", shell=True, check=True)
@@ -18,10 +18,10 @@ webservice.json.compact = False
 
 @webservice.route("/receipts")
 def receipts():
-    if len(request.args) == 1:
+    if len(request.args) == 1 and "receiptid" in request.args and check_receiptId(request.args.get("receiptid")): 
         # Tutaj muszę sprawdzić czy istnieje wywołany paraon
-        print("Checking: Passed: Webservice called with 1 argument.")
-        if 
+        print("Checking: Passed: Check one receipt called.")
+        get_receipt(request.args.get("receiptid"))
         return jsonify({
             "status": "OK.",
             "kod błędu": "0",
@@ -38,7 +38,7 @@ def receipts():
         }), 200        
     
     else:
-        print("Checking: Error: Webservice called with bad number of arguments.")
+        print("Checking: Error: Webservice called wrong.")
         return jsonify({
             "status": "Błąd.",
             "kod błędu": "3",
