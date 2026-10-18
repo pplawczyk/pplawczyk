@@ -18,22 +18,22 @@ def check_data_folder():
 def check_data_file():
     my_file = Path.cwd() / "data/receipts.json"
     if not my_file.is_file():
-        print("Checking: Error: JSON file doesn't exist")
+        print("Checking: Error: JSON file doesn't exist.")
         return(False)
     elif my_file.stat().st_size == 0:
-        print("Checking: Error: JSON file has 0 size")
+        print("Checking: Error: JSON file has 0 size.")
         return(False)
     else:
-        print("Checking: Passed: JSON file is not empty")
+        print("Checking: Passed: JSON file is not empty.")
         return(True)
 
-# sprawdzam czy receiptId ma format zgodny z UUID, do tego potrzebna mi biblioteka uuid
 
+# sprawdzam czy receiptId ma format zgodny z UUID, do tego potrzebna mi biblioteka uuid
 def check_receiptId(receiptId):
     try:
         uuid.UUID(receiptId)
         print("Podana wartość jest zgodna z UUID.")
         return(True)
     except ValueError:
-        print("Podana wartość nie jest zgodna z UUID")
+        print("Podana wartość nie jest zgodna z UUID.")
         return(False)

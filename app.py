@@ -1,8 +1,6 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_receiptId
-from archive.webservice import webservice_start
+from check_data import check_data_folder, check_data_file#, check_argument, check_receiptId
 from flask import Flask, jsonify, request
-from werkzeug.serving import make_server
 
 subprocess.run("cls", shell=True, check=True)
 print("Info: Program started.")
@@ -20,26 +18,32 @@ webservice.json.compact = False
 
 @webservice.route("/receipts")
 def receipts():
-    if len(request.args) == 0:
-        return jsonify({
-        "status": "Błąd.",
-        "kod błędu": "2",
-        "opis": "Nie podano parametrów."
-    })
-    elif len(request.args) == 1 and check_receiptId(request.args["receiptId"]):
+    if len(request.args) == 1:
         # Tutaj muszę sprawdzić czy istnieje wywołany paraon
+        print("Checking: Passed: Webservice called with 1 argument.")
+        if 
         return jsonify({
             "status": "OK.",
             "kod błędu": "0",
-            "opis": "Podano prawidłowy parametr w wywołaniu usługi.",
+            "opis": "Rozpoznano jeden parametr.",
         }), 200
-        
-    else:
+    
+    elif len(request.args) == 2:
+        # Tutaj muszę sprawdzić czy odpytano o właściwy zakres danych
+        print("Checking: Passed: Webservice called with 2 arguments.")
         return jsonify({
-                "status": "Błąd.",
-                "kod błędu": "3",
-                "opis": "Podany parametr nie spełnia wymogów UUID."
-        })
+            "status": "OK.",
+            "kod błędu": "0",
+            "opis": "Rozpoznano dwa parametry.",
+        }), 200        
+    
+    else:
+        print("Checking: Error: Webservice called with bad number of arguments.")
+        return jsonify({
+            "status": "Błąd.",
+            "kod błędu": "3",
+            "opis": "Podany zły parametr wywołania."
+        }), 200
          
      
 
