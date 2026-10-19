@@ -21,7 +21,7 @@ def receipts():
     if len(request.args) == 1 and "receiptid" in request.args and check_receiptId(request.args.get("receiptid")): 
         # Tutaj muszę sprawdzić czy istnieje wywołany paraon
         print("Checking: Passed: Check one receipt called.")
-        get_receipt(request.args.get("receiptid"))
+        print(get_receipt(request.args.get("receiptid")))
         return jsonify({
             "status": "OK.",
             "kod błędu": "0",

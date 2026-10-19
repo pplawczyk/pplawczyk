@@ -4,7 +4,7 @@
 # pathlib to standartowa bibliotego pythona używana do pracy ze ścieżkami,
 from pathlib import Path
 import uuid
-import json
+import ijson
 
 def check_data_folder():
     # Zmienna, której przypisuje folder w którym znajduje się JSON z paragonami 
@@ -41,6 +41,19 @@ def check_receiptId(receiptId):
 
 
 # funkcja zwracająca dane pragonu o zadanym UUID
-def get_receipt(receiptId):
-    print("Funkcja szuka paragonu.", receiptId)
-    return True
+def get_receipt(receipt_id: str) -> bool:
+    file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
+    searched_receipt_id = str(receipt_id).strip().lower()
+
+    with file_path.open("rb") as file:
+        for receipt in ijson.items(file, "receipts.item"):
+            current_receipt_id = (
+                str(receipt.get("document", {}).get("receiptId", ""))
+                .strip()
+                .lower()
+            )
+
+            if current_receipt_id == searched_receipt_id:
+                return True
+
+    return False
