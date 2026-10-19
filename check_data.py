@@ -29,31 +29,38 @@ def check_data_file():
         return True
 
 
-# sprawdzam czy wywołano wałaściwe argumenty
+# sprawdzam czy wywołano właściwe argumenty
 def check_arguments(arguments, number_of_args: int) -> bool:
+# dla sprawdzenia wypiszę argumenty, które podano
+    print(f"*"*60)
     for argument_name in arguments:
         values = arguments.getlist(argument_name)
         for value in values:
             print(f"Nazwa argumentu: {argument_name}, wartość: {value}")
-    return True
+    print(f"*"*60)
+
+# Zwróć True jeśli ilość argumentów jest 1 oraz wywołany argument to "receiptId" a wartość argumentu jest zgodna z UUID
+    if number_of_args == 1 and next(iter(arguments)) == "receiptId" and check_receiptId(arguments.get("receiptId")):
+        print("Obsłużono sprawdzenie 1 argumentu")
+        return True
+    elif number_of_args == 2:
+        print("Obsługa sprawdzenia 2 argumentów")
+        return True
+    else:
+        return False
 
 
-
-
-
-
+# jeśli ilość argumentów jest 2 to sprawdź czy są to: data_od i data_do
 
 
 
 
 
 # sprawdzam czy receiptId ma format zgodny z UUID, do tego potrzebna mi biblioteka uuid
-def check_receiptId(receiptId):
+def check_receiptId(value):
     try:
-        uuid.UUID(receiptId)
-        print("Podana wartość jest zgodna z UUID.")
+        uuid.UUID(value)
         return True
     except ValueError:
-        print("Podana wartość nie jest zgodna z UUID.")
         return False
 

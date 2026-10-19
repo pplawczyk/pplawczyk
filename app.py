@@ -21,9 +21,8 @@ webservice.json.compact = False
 def receipts():
     if len(request.args) == 1 and check_arguments(request.args, 1): 
         # Tutaj muszę sprawdzić czy istnieje wywołany paraon
-        subprocess.run("cls", shell=True, check=True)
+ #       subprocess.run("cls", shell=True, check=True)
         print("Checking: Passed: Webservice called with 1 argument.")
-        print(check_arguments(request.args, 1))
         return jsonify({
             "status": "OK.",
             "kod błędu": "3",
@@ -32,9 +31,8 @@ def receipts():
     
     elif len(request.args) == 2 and check_arguments(request.args, 2):
         # Tutaj muszę sprawdzić czy odpytano o właściwy zakres danych
-        subprocess.run("cls", shell=True, check=True)
+#        subprocess.run("cls", shell=True, check=True)
         print("Checking: Passed: Webservice called with 2 arguments.")
-        print(check_arguments(request.args, 1))
         return jsonify({
             "status": "OK.",
             "kod błędu": "4",
@@ -42,7 +40,7 @@ def receipts():
         }), 200        
     
     else:
-        subprocess.run("cls", shell=True, check=True)
+#        subprocess.run("cls", shell=True, check=True)
         print("Checking: Error: Webservice called with wrong number of arguments.")
         return jsonify({
             "status": "Błąd.",
