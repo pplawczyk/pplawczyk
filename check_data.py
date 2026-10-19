@@ -29,6 +29,24 @@ def check_data_file():
         return True
 
 
+# sprawdzam czy wywołano wałaściwe argumenty
+def check_arguments(arguments, number_of_args: int) -> bool:
+    for argument_name in arguments:
+        values = arguments.getlist(argument_name)
+        for value in values:
+            print(f"Nazwa argumentu: {argument_name}, wartość: {value}")
+    return True
+
+
+
+
+
+
+
+
+
+
+
 # sprawdzam czy receiptId ma format zgodny z UUID, do tego potrzebna mi biblioteka uuid
 def check_receiptId(receiptId):
     try:
@@ -39,21 +57,3 @@ def check_receiptId(receiptId):
         print("Podana wartość nie jest zgodna z UUID.")
         return False
 
-
-# funkcja zwracająca dane pragonu o zadanym UUID
-def get_receipt(receipt_id: str) -> bool:
-    file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
-    searched_receipt_id = str(receipt_id).strip().lower()
-
-    with file_path.open("rb") as file:
-        for receipt in ijson.items(file, "receipts.item"):
-            current_receipt_id = (
-                str(receipt.get("document", {}).get("receiptId", ""))
-                .strip()
-                .lower()
-            )
-
-            if current_receipt_id == searched_receipt_id:
-                return True
-
-    return False

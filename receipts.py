@@ -7,15 +7,26 @@
 #
 # Do obsługi plików JSON "element" po "elemencie" (item) potrzebuje biblioteki ijoin
 import ijson
-#
-# Sprawdź czy istnieje paragon o podanym ID
-def ask_if_receipt_exists(receipt_id):
-    # najpierw otworzę sobie plik z danymi do odczytu jako plik binerny bo tego wymagan ijson
-    # with zapewnia mi, że dopóki nie zamknę tego segmentu plik pozostnie otwarty, a po jego zamknięciu python samodzielnie ten plik zamknie
-    with open("data/receipts.json", "rb") as file:
+from pathlib import Path
+import uuid
 
+
+#
+# Sprawdź czy istnieje paragon o podanym UUID
+
+def get_receipt(receipt_id: str) -> bool:
+    file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
+    searched_receipt_id = str(receipt_id).strip().lower()
+
+    with file_path.open("rb") as file:
         for receipt in ijson.items(file, "receipts.item"):
-            if receipt["document"]["receiptId"] == receipt_id:
+            current_receipt_id = (
+                str(receipt.get("document", {}).get("receiptId", ""))
+                .strip()
+                .lower()
+            )
+
+            if current_receipt_id == searched_receipt_id:
                 return True
 
     return False

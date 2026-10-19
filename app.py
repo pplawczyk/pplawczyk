@@ -1,6 +1,7 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_receiptId, get_receipt
+from check_data import check_data_folder, check_data_file, check_receiptId, check_arguments
 from flask import Flask, jsonify, request
+from receipts import get_receipt
 
 subprocess.run("cls", shell=True, check=True)
 print("Info: Program started.")
@@ -18,30 +19,34 @@ webservice.json.compact = False
 
 @webservice.route("/receipts")
 def receipts():
-    if len(request.args) == 1 and "receiptid" in request.args and check_receiptId(request.args.get("receiptid")): 
+    if len(request.args) == 1 and check_arguments(request.args, 1): 
         # Tutaj muszę sprawdzić czy istnieje wywołany paraon
-        print("Checking: Passed: Check one receipt called.")
-        print(get_receipt(request.args.get("receiptid")))
+        subprocess.run("cls", shell=True, check=True)
+        print("Checking: Passed: Webservice called with 1 argument.")
+        print(check_arguments(request.args, 1))
         return jsonify({
             "status": "OK.",
-            "kod błędu": "0",
+            "kod błędu": "3",
             "opis": "Rozpoznano jeden parametr.",
         }), 200
     
-    elif len(request.args) == 2:
+    elif len(request.args) == 2 and check_arguments(request.args, 2):
         # Tutaj muszę sprawdzić czy odpytano o właściwy zakres danych
+        subprocess.run("cls", shell=True, check=True)
         print("Checking: Passed: Webservice called with 2 arguments.")
+        print(check_arguments(request.args, 1))
         return jsonify({
             "status": "OK.",
-            "kod błędu": "0",
+            "kod błędu": "4",
             "opis": "Rozpoznano dwa parametry.",
         }), 200        
     
     else:
-        print("Checking: Error: Webservice called wrong.")
+        subprocess.run("cls", shell=True, check=True)
+        print("Checking: Error: Webservice called with wrong number of arguments.")
         return jsonify({
             "status": "Błąd.",
-            "kod błędu": "3",
+            "kod błędu": "5",
             "opis": "Podany zły parametr wywołania."
         }), 200
          
