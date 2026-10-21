@@ -1,7 +1,6 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_receiptId, check_arguments
+from check_data import check_data_folder, check_data_file, check_arguments_no, check_arguments_name
 from flask import Flask, jsonify, request
-from receipts import get_receipt
 
 subprocess.run("cls", shell=True, check=True)
 print("Info: Program started.")
@@ -19,35 +18,42 @@ webservice.json.compact = False
 
 @webservice.route("/receipts")
 def receipts():
-    if len(request.args) == 1 and check_arguments(request.args, 1): 
-        # Tutaj muszę sprawdzić czy istnieje wywołany paraon
- #       subprocess.run("cls", shell=True, check=True)
-        print("Checking: Passed: Webservice called with 1 argument.")
+    if check_arguments_no(request.args):
+        
+        if len(request.args) == 1:
+             #sprawdź czy wywołany argument to ten właściwy. Oczekuje receiptId skoro jest 1.
+             print("Czy właściwy argument?: ", check_arguments_name(request.args, "receiptId"))
+             if check_arguments_name(request.args, "receiptId"):
+                print("Obsłuż zapytanie o 1 paragon.")
+
+             else:
+                print("Jeden argument ale o złej nazwie. Kończe to.")
+                return jsonify({
+                        "status": "OK.",
+                        "kod": "4",
+                        "opis": "Podano argument o niewłaściwej nazwie."
+                    }), 200
+        
+        elif len(request.args) == 2:
+            print("Wywołano 2 argument. Obsłuż to.")
+
         return jsonify({
-            "status": "OK.",
-            "kod błędu": "3",
-            "opis": "Rozpoznano jeden parametr.",
-        }), 200
-    
-    elif len(request.args) == 2 and check_arguments(request.args, 2):
-        # Tutaj muszę sprawdzić czy odpytano o właściwy zakres danych
-#        subprocess.run("cls", shell=True, check=True)
-        print("Checking: Passed: Webservice called with 2 arguments.")
-        return jsonify({
-            "status": "OK.",
-            "kod błędu": "4",
-            "opis": "Rozpoznano dwa parametry.",
-        }), 200        
-    
+        "status": "OK.",
+        "kod": "2",
+        "opis": "Podano właściwą liczbę argumentów."
+    }), 200
+
     else:
-#        subprocess.run("cls", shell=True, check=True)
-        print("Checking: Error: Webservice called with wrong number of arguments.")
+        print("Kończę pracę bo wywołano niewłaściwe argumenty.")
         return jsonify({
-            "status": "Błąd.",
-            "kod błędu": "5",
-            "opis": "Podany zły parametr wywołania."
+        "status": "Błąd.",
+        "kod": "3",
+        "opis": "Podano niewłaściwą liczbę argumentów."
         }), 200
-         
+
+
+
+     
      
 
 
@@ -62,12 +68,12 @@ def root_page():
     if  len(request.args) == 0:
             return jsonify({
                 "status": "Sukces.",
-                "kod błędu": 0,
+                "kod": 0,
                 "opis": "Witaj w serwisie pragonów fiskalnych."
             }), 200
     return jsonify({
         "status": "Błąd.",
-        "kod błędu": "1",
+        "kod": "1",
         "opis": "Nie wywołano usługi."
     }), 200
 if __name__ == "__main__":
