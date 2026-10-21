@@ -53,8 +53,12 @@ def check_arguments_no(arguments) -> bool:
         print("Podano złą liczbę argumentów.")
         return False
 
+# sprawdz czy wywołany argument jest o właściwej nazwie
 def check_arguments_name(arguments, name: str) -> bool:
     if name in arguments:
         return True
     else:
         return False
+
+def receiptId(arguments):
+    return True
