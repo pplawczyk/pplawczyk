@@ -1,9 +1,9 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_arguments_no, check_arguments_name
+from check_data import check_data_folder, check_data_file, check_arguments_no, get_receipt
 from flask import Flask, jsonify, request
 
 subprocess.run("cls", shell=True, check=True)
-print("Info: Program started.")
+print("Info: Program started.\n")
 
 check_data_folder()
 check_data_file()
@@ -15,19 +15,26 @@ webservice.json.ensure_ascii = False
 webservice.json.sort_keys = False
 webservice.json.compact = False
 
-
+# Tutaj obsługuje endpoint /receipts
 @webservice.route("/receipts")
 def receipts():
+    
+    # Zaczynam od sprawdzenia czy podano właściwą liczbę argumentów
     if check_arguments_no(request.args):
         
+        # Skoro liczba argumentów się zgadza to robię sprwadzenia czy jest 1 i obsługuję ten przypadek
         if len(request.args) == 1:
-             #sprawdź czy wywołany argument to ten właściwy. Oczekuje receiptId skoro jest 1.
-             print("Czy właściwy argument?: ", check_arguments_name(request.args, "receiptId"))
-             if check_arguments_name(request.args, "receiptId"):
-                print("Obsłuż zapytanie o 1 paragon.")
+            print(f"Info: Number of arguments is: {len(request.args)}.\n")
+            
+            # Sprawdź czy wywołany argument to receiptId.
+            if next(iter(request.args)) == "receiptId":
+                print(f"Checking: Passed: Called argument is: {next(iter(request.args))}\n")
+                # Skoro wywołany argument jest poprawny to przejdź do szukania paragnu o zadanym Id
+                get_receipt(request.args.get("receiptId"))
 
-             else:
-                print("Jeden argument ale o złej nazwie. Kończe to.")
+            else:
+                # Argumentem nie jest receiptId więc kończę błędem
+                print("Checking: Error. Called argument not recognized.\n")
                 return jsonify({
                         "status": "OK.",
                         "kod": "4",
@@ -76,6 +83,9 @@ def root_page():
         "kod": "1",
         "opis": "Nie wywołano usługi."
     }), 200
+
+
+# Tutaj uruchamiam webserwice
 if __name__ == "__main__":
-    print("Info: Webservice is starting")
+    print("Info: Webservice is starting.\n")
     webservice.run(debug=True)
