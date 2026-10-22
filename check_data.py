@@ -18,16 +18,18 @@ def get_receipt(receipt_id):
         file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
         print(f"Info: Path to JSON with data is: {file_path}\n")
 
-        # 
+        # Przy użyciu otwartego pliku...
         with open(file_path, "rb") as file:
-            for receipt in ijson.items(file, "item"):
 
-                if receipt.get("receiptId") == receipt_id:
+            # Sprawdzam kolejne elementy JSON-a
+            for receipt in ijson.items(file, "receipts.item"):
+                saved_receipt_id = receipt.get("document", {}).get("receiptId")
+                print(f"Sprawdzam element: {saved_receipt_id}")
+                if saved_receipt_id == receipt_id:
+                    print(f"Znaleziony element to: {saved_receipt_id}")
                     return True
 
         return False
-
-
 
 
 

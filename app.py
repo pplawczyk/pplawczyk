@@ -30,7 +30,7 @@ def receipts():
             if next(iter(request.args)) == "receiptId":
                 print(f"Checking: Passed: Called argument is: {next(iter(request.args))}\n")
                 # Skoro wywołany argument jest poprawny to przejdź do szukania paragnu o zadanym Id
-                get_receipt(request.args.get("receiptId"))
+                print(f"Paragon znaleziony?: {get_receipt(request.args.get("receiptId"))}\n")
 
             else:
                 # Argumentem nie jest receiptId więc kończę błędem
