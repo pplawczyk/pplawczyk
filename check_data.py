@@ -1,10 +1,10 @@
 # Tutaj utworzę sobie fukcje, którymi będę sprawdzał różne rzeczy przed uruchomieniem całego rozwiązania.
 # Na początek sprawdzę czy mam dostęp do pliku JSON z paragonami
 
-# pathlib to standartowa bibliotego pythona używana do pracy ze ścieżkami,
-from pathlib import Path
-import uuid
-import ijson
+from pathlib import Path        # pathlib to standartowa bibliotego pythona używana do pracy ze ścieżkami katalogów
+import uuid                     # do obsługi formatów UUID
+import ijson                    # do obsługi danych w json w formie całych elementów 
+from datetime import datetime   # do obługi formatów daty 
 
 # sprawdź czy istnieje folder z danymi
 def check_data_folder():
@@ -55,7 +55,16 @@ def check_arguments_no(arguments) -> bool:
         print("Checking: Error. Wrong number of arguments.\n")
         return False
 
-
+# sprawdź czy podany str jest w formacie daty: rrrr-mm-dd
+def check_date(date_string: str) -> bool:
+    try:
+        datetime.strptime(date_string, "%Y-%m-%d")
+        print("Checking: Passed: Argument looks like correct date.\n")
+        return True
+    
+    except ValueError:
+        print("Checking: Error: This argument doesn't look like correct date.\n")
+        return False
 
 # Tu są rzeczy już nie potrzebne
 # Sprawdź czy wywołany argument jest o właściwej nazwie

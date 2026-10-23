@@ -23,16 +23,28 @@ def receipts():
     # Zaczynam od sprawdzenia czy podano właściwą liczbę argumentów
     if check_arguments_no(request.args):
         
+        # dla uproszczenia w tej zmiennej trzymam sobie listę wywołanych argumentów 
+        arguments = list(request.args)    
+        
         # Skoro liczba argumentów się zgadza to robię sprwadzenia czy jest 1 i obsługuję ten przypadek
         if len(request.args) == 1:
             print(f"Info: Number of arguments is: {len(request.args)}.\n")
             
             # Sprawdź czy wywołany argument to receiptId.
             if next(iter(request.args)) == "receiptId":
-                print(f"Checking: Passed: Called argument is: {next(iter(request.args))}\n")
+                arguments = list(request.args)
+                print(f"Checking: Passed: Called argument is: {arguments[0]}\n")
+
                 # Skoro wywołany argument jest poprawny to przejdź do szukania paragnu o zadanym Id
-                
-                return jsonify(get_receipt(request.args.get("receiptId")))
+                receipt = get_receipt(request.args.get("receiptId"))
+                if receipt == False:
+                    return jsonify({
+                        "status": "OK.",
+                        "kod": "5",
+                        "opis": "Nie znaleziono paragonu o zadanym UUID."
+                    }), 200
+                else:
+                    return jsonify(receipt)
 
             else:
                 # Argumentem nie jest receiptId więc kończę błędem
@@ -44,7 +56,7 @@ def receipts():
                     }), 200
         
         elif len(request.args) == 2:
-            print("Wywołano 2 argument. Obsłuż to.")
+            print(f"Checking: Passed: Called argument is: {arguments[0]}, {arguments[1]}\n")
 
         return jsonify({
         "status": "OK.",

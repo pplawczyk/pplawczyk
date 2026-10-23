@@ -5,13 +5,13 @@
 # 1. sprawdź czy paragon o danym ID istnieje in:(id_paragonu), out:(boolean)
 # 2. odpytaj o paragony z danego zakresu in:(datefrom, dateto), out:(list[id_paragonów...])
 #
-# Do obsługi plików JSON "element" po "elemencie" (item) potrzebuje biblioteki ijoin
-import ijson
-from pathlib import Path
-import uuid
-from check_data import check_uuid
-from flask import Flask, jsonify
 
+import ijson                                    # do obsługi plików JSON "element" po "elemencie" (item)
+from pathlib import Path                        # do obsługi ścieżek w katalogach
+import uuid                                     # do obsługi formatu UUID
+from flask import Flask, jsonify                # do obsługi webservice
+from datetime import datetime                   # do obsługi formatów dat ISO 8601
+from check_data import check_uuid, check_date   # moje funkcje do sprawdzania różnych danych
 #
 # Sprawdź czy istnieje paragon o podanym UUID
 
@@ -19,7 +19,7 @@ from flask import Flask, jsonify
 def get_receipt(receipt_id):
         # Sprawdzam czy w wyołaniu funkcji id paragonu jest w formacie UUID 
         if not check_uuid(receipt_id):
-            print("Checking: Error: Value is not in UUID format.\n")
+            print(f"Checking: Error: Value: \"{receipt_id}\" is not in UUID format.\n")
             return False
         print("Checking: Passed. ReceiptId looks like UUID.\n")
 
@@ -35,11 +35,12 @@ def get_receipt(receipt_id):
                 saved_receipt_id = receipt.get("document", {}).get("receiptId")
                 print(f"Current UUID: {saved_receipt_id}")
                 if saved_receipt_id == receipt_id:
-                    print(f"UUID found!: {saved_receipt_id}")
+                    print(f"UUID found!: {saved_receipt_id}\n")
                     return receipt
 
         return False
 
 
-def get_receipts_list():
-     return True
+def get_receipts_list(date_from: str, date_to: str) -> list:
+    print(f"Czy pierwszy argument to data?: {check_date(date_from)}")
+    return True
