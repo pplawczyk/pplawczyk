@@ -1,7 +1,7 @@
 import subprocess
 from check_data import check_data_folder, check_data_file, check_arguments_no
 from flask import Flask, jsonify, request
-from receipts import get_receipt
+from receipts import get_receipt, get_receipts_list
 
 subprocess.run("cls", shell=True, check=True)
 print("Info: Program started.\n")
@@ -56,8 +56,11 @@ def receipts():
                     }), 200
         
         elif len(request.args) == 2:
-            print(f"Checking: Passed: Called argument is: {arguments[0]}, {arguments[1]}\n")
-
+            # dla wygody tworzę sobie zmienne, które przechowują wartości wywołania endpoint
+            date_from = request.args[arguments[0]]
+            date_to = request.args[arguments[1]]
+            print(f"Info: Two called arguments are: {arguments[0]} = {date_from}, {arguments[1]} = {date_to}\n")
+            get_receipts_list(date_from , date_to)
         return jsonify({
         "status": "OK.",
         "kod": "2",

@@ -6,12 +6,12 @@
 # 2. odpytaj o paragony z danego zakresu in:(datefrom, dateto), out:(list[id_paragonów...])
 #
 
-import ijson                                    # do obsługi plików JSON "element" po "elemencie" (item)
-from pathlib import Path                        # do obsługi ścieżek w katalogach
-import uuid                                     # do obsługi formatu UUID
-from flask import Flask, jsonify                # do obsługi webservice
-from datetime import datetime                   # do obsługi formatów dat ISO 8601
-from check_data import check_uuid, check_date   # moje funkcje do sprawdzania różnych danych
+import ijson                                        # do obsługi plików JSON "element" po "elemencie" (item)
+from pathlib import Path                            # do obsługi ścieżek w katalogach
+import uuid                                         # do obsługi formatu UUID
+from flask import Flask, jsonify                    # do obsługi webservice
+from datetime import datetime                       # do obsługi formatów dat ISO 8601
+from check_data import check_uuid, check_if_date    # moje funkcje do sprawdzania różnych danych
 #
 # Sprawdź czy istnieje paragon o podanym UUID
 
@@ -42,5 +42,9 @@ def get_receipt(receipt_id):
 
 
 def get_receipts_list(date_from: str, date_to: str) -> list:
-    print(f"Czy pierwszy argument to data?: {check_date(date_from)}")
-    return True
+    if check_if_date(date_from) and check_if_date(date_to):
+         print(f"Checking: Passed: Both argument values are dates.\n")
+         return True
+    else:
+        print(f"Checking: Error: One or both arguments are not dates.\n")
+    return False

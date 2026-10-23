@@ -56,10 +56,10 @@ def check_arguments_no(arguments) -> bool:
         return False
 
 # sprawdź czy podany str jest w formacie daty: rrrr-mm-dd
-def check_date(date_string: str) -> bool:
+def check_if_date(date_string: str) -> bool:
     try:
         datetime.strptime(date_string, "%Y-%m-%d")
-        print("Checking: Passed: Argument looks like correct date.\n")
+        print(f"Checking: Passed: String \"{date_string}\" looks like correct date format.\n")
         return True
     
     except ValueError:
