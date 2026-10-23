@@ -32,4 +32,21 @@ Open: nie wiem czy potrzebne jest obsłużenie wszystkich możliwych wywołań s
 Z3 - Dodam obsługę plików. Tak by móc czytac plik z paragonami.
 Open: jaką metodę wybrać? Przeglądanie całego pliku przy każdym zapytaniu do webservice wydaje się być mało eleganckim rozwiązaniem. Najlepiej wydaje się wczytywać jakoś paragon po paragonie, sprawdzać paragaon różnymi warunkami i przygotować wynik w postaci listy z ID. Nie wiem jak wygodnie zwrócić taki wynik.
 Z4 - rozpocznać temat przetwarzania równoległego zapytań
+
+
+
+Kody:
+0: / ok, przywitanie 
+1: / error, 
+2: /receipts ok
+3: /receipts błąd
+4: /receipts błąd
+
+
+
+
+
+
+
+
 -->
