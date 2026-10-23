@@ -6,42 +6,6 @@ from pathlib import Path
 import uuid
 import ijson
 
-# w tej funkcji sprawdzam czy w pliku z pragaonami znajduje się paragon o podanym UUID i jeśli go znajdę to zwrócę jego zawartość
-def get_receipt(receipt_id):
-        # Sprawdzam czy w wyołaniu funkcji id paragonu jest w formacie UUID 
-        if not check_uuid(receipt_id):
-            print("Checking: Error: Value is not in UUID format.\n")
-            return False
-        print("Checking: Passed. ReceiptId looks like UUID.\n")
-
-        # Ustalam ścieżkę do pliku danych
-        file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
-        print(f"Info: Path to JSON with data is: {file_path}\n")
-
-        # Przy użyciu otwartego pliku...
-        with open(file_path, "rb") as file:
-
-            # Sprawdzam kolejne elementy JSON-a
-            for receipt in ijson.items(file, "receipts.item"):
-                saved_receipt_id = receipt.get("document", {}).get("receiptId")
-                print(f"Sprawdzam element: {saved_receipt_id}")
-                if saved_receipt_id == receipt_id:
-                    print(f"Znaleziony element to: {saved_receipt_id}")
-                    return True
-
-        return False
-
-
-
-
-
-
-
-
-
-
-
-
 # sprawdź czy istnieje folder z danymi
 def check_data_folder():
     # Zmienna, której przypisuje folder w którym znajduje się JSON z paragonami 
@@ -93,22 +57,8 @@ def check_arguments_no(arguments) -> bool:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Niepotrzebne. Sprawdź czy wywołany argument jest o właściwej nazwie
+# Tu są rzeczy już nie potrzebne
+# Sprawdź czy wywołany argument jest o właściwej nazwie
 def check_arguments_name(arguments, name: str) -> bool:
     if name in arguments:
         print(f"Checking: Passed: Arument name is: {name}.\n")

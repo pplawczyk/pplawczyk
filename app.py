@@ -1,6 +1,7 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_arguments_no, get_receipt
+from check_data import check_data_folder, check_data_file, check_arguments_no
 from flask import Flask, jsonify, request
+from receipts import get_receipt
 
 subprocess.run("cls", shell=True, check=True)
 print("Info: Program started.\n")
