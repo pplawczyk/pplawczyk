@@ -42,6 +42,7 @@ def get_receipt(receipt_id):
 
 
 def get_receipts_list(date_from: str, date_to: str) -> list:
+    # sprawdzę czy podane wartości to poprawne daty
     if check_if_date(date_from) and check_if_date(date_to):
          print(f"Checking: Passed: Both argument values are dates.\n")
          return True
