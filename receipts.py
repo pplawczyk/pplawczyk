@@ -9,24 +9,37 @@
 import ijson
 from pathlib import Path
 import uuid
-
+from check_data import check_uuid
+from flask import Flask, jsonify
 
 #
 # Sprawdź czy istnieje paragon o podanym UUID
 
-def get_receipt(receipt_id: str) -> bool:
-    file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
-    searched_receipt_id = str(receipt_id).strip().lower()
+# w tej funkcji sprawdzam czy w pliku z pragaonami znajduje się paragon o podanym UUID i jeśli go znajdę to zwrócę jego zawartość
+def get_receipt(receipt_id):
+        # Sprawdzam czy w wyołaniu funkcji id paragonu jest w formacie UUID 
+        if not check_uuid(receipt_id):
+            print("Checking: Error: Value is not in UUID format.\n")
+            return False
+        print("Checking: Passed. ReceiptId looks like UUID.\n")
 
-    with file_path.open("rb") as file:
-        for receipt in ijson.items(file, "receipts.item"):
-            current_receipt_id = (
-                str(receipt.get("document", {}).get("receiptId", ""))
-                .strip()
-                .lower()
-            )
+        # Ustalam ścieżkę do pliku danych
+        file_path = Path(__file__).resolve().parent / "data" / "receipts.json"
+        print(f"Info: Path to JSON with data is: {file_path}\n")
 
-            if current_receipt_id == searched_receipt_id:
-                return True
+        # Przy użyciu otwartego pliku...
+        with open(file_path, "rb") as file:
 
-    return False
+            # Sprawdzam kolejne elementy JSON-a
+            for receipt in ijson.items(file, "receipts.item"):
+                saved_receipt_id = receipt.get("document", {}).get("receiptId")
+                print(f"Current UUID: {saved_receipt_id}")
+                if saved_receipt_id == receipt_id:
+                    print(f"UUID found!: {saved_receipt_id}")
+                    return receipt
+
+        return False
+
+
+def get_receipts_list():
+     return True
