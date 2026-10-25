@@ -60,7 +60,7 @@ def receipts():
             date_from = request.args[arguments[0]]
             date_to = request.args[arguments[1]]
             print(f"Info: Two called arguments are: {arguments[0]} = {date_from}, {arguments[1]} = {date_to}\n")
-            get_receipts_list(date_from , date_to)
+            print(get_receipts_list(date_from , date_to))
         return jsonify({
         "status": "OK.",
         "kod": "2",
