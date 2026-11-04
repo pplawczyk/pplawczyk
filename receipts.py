@@ -40,12 +40,11 @@ def get_receipt(receipt_id):
 
         return False
 
+# w tej funkcji sprawdzam czy podano 2 argumenty, oba są datami i jeśli tak to zwracam listę poragonów z tego zakresu dat
+def get_receipts_list(date_from: str, date_to: str) -> list[str] | bool:
+    # # najpierw zdekoduje sobie podane daty w formacie str na obiekty daty, które pozwolą mi na porównywanie ich ze sobą
+    # date_from_obj = datetime.strptime(date_from, "%Y-%m-%d").data()
+    # date_to_obj = datetime.strptime(date_to, "%Y-%m-%d").data()
 
-def get_receipts_list(date_from: str, date_to: str) -> list:
     # sprawdzę czy podane wartości to poprawne daty
-    if check_if_date(date_from) and check_if_date(date_to):
-         print(f"Checking: Passed: Both argument values are dates.\n")
-         return True
-    else:
-        print(f"Checking: Error: One or both arguments are not dates.\n")
-    return False
+    return True

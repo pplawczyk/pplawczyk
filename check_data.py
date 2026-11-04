@@ -60,8 +60,8 @@ def check_if_date(date_string: str) -> bool:
     try:
         datetime.strptime(date_string, "%Y-%m-%d")
         print(f"Checking: Passed: String \"{date_string}\" looks like correct date format.\n")
+        
         return True
-    
     except ValueError:
         print("Checking: Error: This argument doesn't look like correct date.\n")
         return False
