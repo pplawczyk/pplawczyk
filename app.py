@@ -1,5 +1,5 @@
 import subprocess
-from check_data import check_data_folder, check_data_file, check_arguments_no
+from check_data import check_data_folder, check_data_file, check_arguments_no, check_arguments_name
 from flask import Flask, jsonify, request
 from receipts import get_receipt, get_receipts_list
 
@@ -60,8 +60,13 @@ def receipts():
             first_date = request.args[arguments[0]]
             second_date = request.args[arguments[1]]
             print(f"Info: Two called arguments are: {arguments[0]} = {first_date}, {arguments[1]} = {second_date}\n")
-            # teraz sprawdzę czy nazwy wywołanych argumentów są poprawne, tak by nie pomylić kolejności analizowanych dat         
-#            print(get_receipts_list(date_from , date_to))
+            # teraz sprawdzę czy nazwy wywołanych argumentów są poprawne, tak by nie pomylić kolejności analizowanych dat     
+            if check_arguments_name(arguments[0], "date_from"):
+                
+                print("Checking: Passed. Called arguments are correct.\n")
+
+            
+            # print(get_receipts_list(date_from , date_to))
         return jsonify({
         "status": "OK.",
         "kod": "2",

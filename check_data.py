@@ -68,7 +68,7 @@ def check_if_date(date_string: str) -> bool:
 
 # Tu są rzeczy już nie potrzebne
 # Sprawdź czy wywołany argument jest o właściwej nazwie
-def check_arguments_name(arguments, name: str) -> bool:
+def check_arguments_name(arguments: str, name: str) -> bool:
     if name in arguments:
         print(f"Checking: Passed: Arument name is: {name}.\n")
         return True

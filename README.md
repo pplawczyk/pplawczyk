@@ -41,6 +41,7 @@ Kody:
 2: /receipts ok
 3: /receipts błąd
 4: /receipts błąd
+5: /receipts ok, nie znaleziono paragonu
 
 
 
